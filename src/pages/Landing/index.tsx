@@ -5,7 +5,7 @@ import { FiArrowRight } from 'react-icons/fi'
 
 import logoImg from '../../assets/images/logo.svg';
 
-import '../../styles/pages/landing.css';
+import './styles.css';
 
 function Landing() {
   return (
