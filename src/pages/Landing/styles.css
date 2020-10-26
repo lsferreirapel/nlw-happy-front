@@ -1,6 +1,7 @@
 #page-landing {
   width: 100vw;
   height: 100vh;
+  padding: 20px;
   background: linear-gradient(329.54deg, #29B6D1 0%, #00C7C7 100%);
 
   display: flex;
@@ -26,6 +27,7 @@
 #page-landing .content-wrapper main {
   max-width: 350px;
 }
+
 #page-landing .content-wrapper main h1 {
   font-size: 76px;
   font-weight: 900;
@@ -39,7 +41,7 @@
 
 .content-wrapper .location {
   position: absolute;
-  right: 0;
+  left: 320px;
   top: 0;
 
   font-size: 24px;
@@ -52,6 +54,32 @@
 }
 .content-wrapper .location strong {
   font-weight: 800;
+}
+
+.content-wrapper .enter-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 222px;
+  padding: 20px 0;
+  border-radius: 20px;
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFF;
+
+  background-color: #12D4E0;
+
+  transition: all .2s;
+}
+.content-wrapper .enter-auth:hover {
+  background-color: #96FEFF;
+  color: #15C3D6;
 }
 
 .content-wrapper .enter-app {
