@@ -48,6 +48,7 @@
   line-height: 34px;
 
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
 
   text-align: right;

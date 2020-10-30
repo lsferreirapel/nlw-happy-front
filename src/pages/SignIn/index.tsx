@@ -1,9 +1,9 @@
 /* React Imports */
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 /* Hooks */
-// import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 /* Styles */
 import './styles.css';
@@ -13,21 +13,32 @@ import { FiArrowLeft } from 'react-icons/fi';
 
 
 function SignIn() {
-  // const { signIn } = useAuth();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const { signIn } = useAuth();
   const history = useHistory();
 
   function handleGoBack() {
     history.goBack();
   }
 
-  function handleSignin(event: MouseEvent) {
+  async function handleSignin(event: MouseEvent) {
     event.preventDefault();
 
-    event.currentTarget.setAttribute('disabled', 'disabled');
+    const button = event.currentTarget;
 
+    button.setAttribute('disabled', 'disabled');
 
-    console.log('signed');
-    event.currentTarget.removeAttribute('disabled');
+    if (email && password) {
+      try {
+        await signIn(email, password);
+      } catch (error) {
+        alert(error.message);
+      }
+    } else {
+      alert('Email e senha não informados!');
+    }
+    button.attributes.removeNamedItem('disabled');
   }
 
   return (
@@ -47,8 +58,27 @@ function SignIn() {
         </button>
         <form className="login-form">
           <legend>Fazer login</legend>
-          <label htmlFor="username">E-mail<input type="email" id="username" /></label>
-          <label htmlFor="password">Senha<input type="password" id="password" /></label>
+
+          <label htmlFor="email">
+            E-mail
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+            />
+          </label>
+
+
+          <label htmlFor="password">
+            Senha
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
+          </label>
           <div className="form-control">
             <label htmlFor="checkbox" className="checkbox"><input type="checkbox" id="checkbox"/>Lembrar-me</label>
             <span className="forgot-password">Esqueci minha senha</span>

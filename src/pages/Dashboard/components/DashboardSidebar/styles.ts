@@ -53,11 +53,7 @@ export const SidebarButton = styled.button`
   }
 
   &:hover {
-    background-color: #FFD666;
-
-    svg {
-      color: #0089A5;
-    }
+    background: #17d6eb;
   }
 
   &.active {

@@ -1,41 +1,47 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { signInService } from '../services/auth';
+import { asyncSignInService } from '../services/auth';
 
 interface AuthContextData {
   signed: boolean;
   loading: boolean;
-  user: object | null;
-  signIn(): Promise<void>;
+  token: string | null;
+  signIn(username: string, password: string): Promise<void>;
+  signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({children}) => {
-  const [user, setUser] = useState<object | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    const storagedUser = localStorage.getItem('@nlw-happy-web:user');
     const storagedToken = localStorage.getItem('@nlw-happy-web:token');
 
-    if (storagedUser && storagedToken) {
-      setUser(JSON.parse(storagedUser));
+    if (storagedToken) {
+      setToken(storagedToken);
       setLoading(false);
     }
+
   }, []);
 
-  async function signIn() {
-    const response = await signInService();
+  async function signIn(username: string, password: string) {
+    const response = await asyncSignInService(username, password);
 
-    setUser(response.user);
+    console.log(response.data.token);
+    setToken(response.data.token);
 
-    localStorage.setItem('@nlw-happy-web:user', JSON.stringify(response.user));
-    localStorage.setItem('@nlw-happy-web:token', response.token);
+    localStorage.setItem('@nlw-happy-web:token', response.data.token);
+  }
+
+  function signOut() {
+    setToken(null);
+
+    localStorage.removeItem('@nlw-happy-web:token');
   }
 
   return (
-    <AuthContext.Provider value={{signed: !!user, loading, user: user, signIn}}>
+    <AuthContext.Provider value={{signed: Boolean(token), token, loading, signIn, signOut}}>
       {children}
     </AuthContext.Provider>
   )

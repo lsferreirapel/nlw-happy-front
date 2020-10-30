@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 /* Routes */
+import AuthenticationRoute from './auth.route';
 import DashboardRoute from './dashboard.route';
 
 import Landing from '../pages/Landing';
@@ -28,11 +29,8 @@ function Routes() {
       <Route path="/orphanages/create" component={CreateOrphanage} />
       <Route path="/orphanages/:id" component={Orphanage} />
 
-      {/* AUTHENTICATION ROUTE */}
-      <Route path="/login" exact component={SignIn} />
-      {/* <Route path="/login/password/reset" component={} /> */}
 
-      <DashboardRoute />
+      {signed ? <DashboardRoute /> : <AuthenticationRoute />}
     </Switch>
   );
 }

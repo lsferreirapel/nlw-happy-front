@@ -1,21 +1,10 @@
+import { AxiosResponse } from 'axios';
+import api from './api'
+
 interface AuthResponse {
   token: string;
-  user: {
-    username: string;
-    permission: number;
-  }
 }
 
-export function signInService(): Promise<AuthResponse> {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        token: '1iu234uijsdhuf2io34',
-        user: {
-          username: 'adm',
-          permission: 0,
-        }
-      })
-    }, 2000)
-  })
+export async function asyncSignInService(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
+  return await api.post('/auth/login', {email, password});
 }

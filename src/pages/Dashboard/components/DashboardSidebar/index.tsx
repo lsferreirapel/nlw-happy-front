@@ -3,14 +3,14 @@ import React, { MouseEvent, useState } from 'react';
 import { FiAlertCircle, FiMapPin, FiPower } from 'react-icons/fi';
 import { Container, SidebarButton, } from './styles';
 import mapMarkerImg from '../../../../assets/images/map-marker.svg';
+import useAuth from '../../../../hooks/useAuth';
 
 interface DashboardSidebarProps{
   onChange: Function;
 }
 
 const DashboardSidebar: React.FC<DashboardSidebarProps> = ({onChange}) => {
-  const [active, setActive] = useState();
-
+  const { signOut } = useAuth();
 
   function handleOnSidebarButtonClick(value: string) {
     if (value === 'pending') {
@@ -25,8 +25,11 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({onChange}) => {
       document.getElementById('registered')?.classList.add('active');
     }
 
-
     onChange(value);
+  }
+
+  function handleDashboardLogout() {
+    signOut();
   }
 
   return (
@@ -39,7 +42,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({onChange}) => {
         </div>
 
         <footer>
-          <SidebarButton><FiPower size={24}/></SidebarButton>
+          <SidebarButton onClick={handleDashboardLogout}><FiPower size={24}/></SidebarButton>
         </footer>
       </Container>
   );
